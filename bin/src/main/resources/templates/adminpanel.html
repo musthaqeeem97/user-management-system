@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .card {
+            margin: 0 auto;
+            margin-top: 100px;
+            max-width: 800px;
+        }
+        .btn-search, .btn-create, .btn-edit, .btn-delete, .btn-logout {
+            background-color: black;
+            color: white;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .table-container {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-body" id="">
+                <h2 class="card-title">User Management</h2>
+                <form class="form-inline mb-3" th:action="@{/adminpanel/search}" method="get">
+                    <input type="text" class="form-control mr-2" id="search" name="search" placeholder="Search">
+                    <button type="submit" class="btn btn-search">Search</button>
+                </form>
+                <div class="table-container">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Loop over user data and display in table rows -->
+                            <tr th:each="user : ${users}">
+                                <td th:text="${user.id}"></td>
+                                <td th:text="${user.username}"></td>
+                                <td th:text="${user.email}"></td>
+                                <td th:text="${user.roles}"></td>
+                                <td>
+                                    <a th:href="@{/adminpanel/edit/{id}(id=${user.id})}" class="btn btn-edit">Edit</a>
+                                    <a th:href="@{/adminpanel/delete/{id}(id=${user.id})}" class="btn btn-delete">Delete</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="button-container">
+                    <a href="/adminpanel/create" class="btn btn-create">Create User</a>
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" class="btn btn-logout" value="Logout">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+</body>
+</html>
